@@ -19,7 +19,7 @@ export default function Input({
       {label && (
         <label
           htmlFor={id}
-          className="block text-sm font-medium text-black"
+          className="block font-mono text-xs uppercase tracking-[0.1em] text-[var(--color-text-muted)]"
         >
           {label}
         </label>
@@ -27,16 +27,16 @@ export default function Input({
 
       <input
         id={id}
-        className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition placeholder:text-black/40 focus:ring-2 ${
+        className={`w-full border-0 border-b bg-transparent px-0 py-3 text-sm text-[var(--color-text)] outline-none transition placeholder:font-mono placeholder:text-[var(--color-text-subtle)] focus:ring-0 ${
           error
-            ? "border-red-500 focus:border-red-500 focus:ring-red-200"
-            : "border-black/15 focus:border-black focus:ring-black/10"
+            ? "border-[var(--color-error)] focus:border-[var(--color-error)]"
+            : "border-[var(--color-outline-muted)] focus:border-[var(--color-champagne)]"
         } ${className}`}
         {...props}
       />
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="font-mono text-xs text-[var(--color-error)]">{error}</p>
       )}
     </div>
   );

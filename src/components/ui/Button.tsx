@@ -24,15 +24,15 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+    "inline-flex min-h-12 items-center justify-center rounded-[var(--radius-control)] border px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
   const variants = {
     primary:
-      "bg-black text-white hover:opacity-90 focus:ring-black",
+      "border-transparent bg-[var(--color-champagne)] text-[var(--color-deep-ink)] hover:bg-[var(--color-champagne-light)]",
     secondary:
-      "border border-black/15 bg-white text-black hover:bg-black/5 focus:ring-black",
+      "border-[var(--color-outline)] bg-transparent text-[var(--color-text)] hover:border-[var(--color-champagne)] hover:text-[var(--color-champagne)]",
     ghost:
-      "bg-transparent text-black hover:bg-black/5 focus:ring-black",
+      "border-transparent bg-transparent text-[var(--color-text)] hover:text-[var(--color-champagne)]",
   };
 
   return (

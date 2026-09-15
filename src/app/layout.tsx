@@ -10,17 +10,17 @@ import AuthProvider from "@/components/providers/AuthProvider";
 import "./globals.css";
 
 const bodoniModa = Bodoni_Moda({
-  variable: "--font-display",
+  variable: "--font-falcon-display",
   subsets: ["latin"],
 });
 
 const hankenGrotesk = Hanken_Grotesk({
-  variable: "--font-body",
+  variable: "--font-falcon-body",
   subsets: ["latin"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-falcon-mono",
   subsets: ["latin"],
 });
 
