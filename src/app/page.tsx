@@ -1,4 +1,4 @@
-import { FalconHero } from "@/components/home/FalconHero";
+import { HomePage } from "@/components/home/HomePage";
 import PublicFooter from "@/components/navigation/PublicFooter";
 import PublicHeader from "@/components/navigation/PublicHeader";
 
@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <PublicHeader />
       <main className="home-page">
-        <FalconHero />
+        <HomePage />
       </main>
       <PublicFooter />
     </>
