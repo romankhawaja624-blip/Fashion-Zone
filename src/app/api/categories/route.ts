@@ -4,9 +4,23 @@ import {
 } from "@/lib/api-response";
 import { handleApiError } from "@/lib/api-error";
 
+type Category = {
+  id: string;
+  parent_id: string | null;
+  name: string;
+  slug: string;
+  description: string | null;
+  image_url: string | null;
+  sort_order: number;
+};
+
+type CategoryNode = Category & {
+  children: CategoryNode[];
+};
+
 export async function GET() {
   try {
-    const result = await db.query(`
+    const result = await db.query<Category>(`
       SELECT
         id,
         parent_id,
@@ -22,7 +36,7 @@ export async function GET() {
 
     const categories = result.rows;
 
-    const categoryMap = new Map(
+    const categoryMap = new Map<string, CategoryNode>(
       categories.map((category) => [
         category.id,
         {
@@ -32,7 +46,7 @@ export async function GET() {
       ])
     );
 
-    const rootCategories: typeof categories = [];
+    const rootCategories: CategoryNode[] = [];
 
     for (const category of categoryMap.values()) {
       if (
@@ -40,7 +54,7 @@ export async function GET() {
         categoryMap.has(category.parent_id)
       ) {
         categoryMap
-          .get(category.parent_id)
+          .get(category.parent_id)!
           .children.push(category);
       } else {
         rootCategories.push(category);
