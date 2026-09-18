@@ -81,6 +81,34 @@ export async function GET(request: NextRequest) {
             LIMIT 1
           ) AS image_url
 
+          ,(
+            SELECT COALESCE(
+              json_agg(
+                json_build_object(
+                  'id', pv.id,
+                  'sku', pv.sku,
+                  'name', pv.name,
+                  'size', pv.size,
+                  'color', pv.color,
+                  'price', pv.price,
+                  'compare_at_price', pv.compare_at_price,
+                  'is_active', pv.is_active,
+                  'quantity', COALESCE(i.quantity, 0),
+                  'reserved_quantity', COALESCE(i.reserved_quantity, 0),
+                  'available_quantity', COALESCE(i.quantity, 0) - COALESCE(i.reserved_quantity, 0)
+                )
+                ORDER BY pv.created_at ASC
+              ),
+              '[]'::json
+            )
+            FROM product_variants pv
+            LEFT JOIN inventory i
+              ON i.variant_id = pv.id
+            WHERE
+              pv.product_id = p.id
+              AND pv.is_active = true
+          ) AS variants
+
         FROM products p
 
         LEFT JOIN categories c

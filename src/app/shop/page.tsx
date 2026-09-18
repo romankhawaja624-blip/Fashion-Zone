@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ProductGrid } from "@/components/commerce/ProductGrid";
@@ -29,7 +29,7 @@ type CategoriesResponse = {
 
 type ViewState = "loading" | "success" | "empty" | "error";
 
-export default function ShopPage() {
+function ShopPageContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -206,5 +206,13 @@ export default function ShopPage() {
       </main>
       <PublicFooter />
     </>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={null}>
+      <ShopPageContent />
+    </Suspense>
   );
 }

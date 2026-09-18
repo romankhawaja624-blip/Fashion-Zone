@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { publicNavigation } from "@/components/navigation/publicNavigation";
+import { getCartCount, subscribeToCartChanges } from "@/lib/cart";
 
 type MenuLabel = (typeof publicNavigation.primary)[number]["label"];
 
@@ -27,6 +28,17 @@ export default function PublicHeader() {
   const [openMenu, setOpenMenu] = useState<MenuLabel | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState<MenuLabel | null>(null);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    setCartCount(getCartCount());
+
+    const unsubscribe = subscribeToCartChanges(() => {
+      setCartCount(getCartCount());
+    });
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     function closeOnEscape(event: KeyboardEvent) {
@@ -120,8 +132,9 @@ export default function PublicHeader() {
           <Link href="/wishlist" className="header-action header-action--wishlist" aria-label="Wishlist">
             <Heart size={18} aria-hidden="true" />
           </Link>
-          <Link href="/shop" className="header-action header-action--bag" aria-label="Shopping bag">
+          <Link href="/cart" className="header-action header-action--bag" aria-label="Shopping bag">
             <ShoppingBag size={18} aria-hidden="true" />
+            <span className="cart-count" aria-live="polite">{cartCount}</span>
           </Link>
           <Link href="/auth/login" className="header-action header-action--account" aria-label="Account">
             <UserRound size={18} aria-hidden="true" />
